@@ -1,38 +1,37 @@
 package com.codeup.controllers;
 
+import com.codeup.models.Post;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- * Created by violet on 6/19/17.
- */
 @Controller
 public class PostsController {
     @GetMapping("/posts")
-    @ResponseBody
-    public String index(){
-        return "posts index page";
+    public String viewAll() {
+        return "posts/index";
     }
 
     @GetMapping("/posts/{id}")
-    @ResponseBody
-    public String individualPost(@PathVariable long id){
-        return "view an individual post";
+    public String viewIndividualPost(@PathVariable long id, Model model) {
+        // Inside the method that shows an individual post, create a new post object and pass it to the view.
+        Post post = new Post("test post", "this is my first test blog post");
+        model.addAttribute("post", post);
+        return "posts/show";
     }
 
-    @GetMapping ("/posts/create")
+    @GetMapping("/posts/create")
     @ResponseBody
-    public String createForm(){
+    public String showPostForm() {
         return "view the form for creating a post";
     }
 
     @PostMapping("/posts/create")
     @ResponseBody
-    public String createPost(){
+    public String savePost() {
         return "create a new post";
     }
-
 }
