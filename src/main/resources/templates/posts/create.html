@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8"/>
+    <title>Post a new Ad</title>
+</head>
+<body>
+
+<form action="/posts/create" method="post" th:object="${post}">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title" class="form-control" th:field="*{title}"/>
+    </div>
+    <div class="form-group">
+        <label for="body">Description</label>
+        <input type="text" name="body" id="body" class="form-control" th:field="*{body}"/>
+    </div>
+    <button class="btn btn-default">Save</button>
+</form>
+</body>
+</html>
