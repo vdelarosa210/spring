@@ -71,4 +71,16 @@ public class PostsController {
 
     }
 
+    @PostMapping("/posts/delete")
+    public String deletePost(@ModelAttribute Post post,
+                             @RequestParam long id,
+                             Model model){
+
+        System.out.println(post.getId());
+        postSvc.deletePost(id);
+        model.addAttribute("message", "Your post was deleted correctly");
+        return "redirect:/posts";
+    }
+
+
 }

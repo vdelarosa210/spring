@@ -19,5 +19,13 @@
     </div>
     <button class="btn btn-default">Save</button>
 </form>
+
+<form th:action="${'/posts/delete'}"
+      method="post" th:object="${post}">
+    <input type="hidden" th:field="*{id}" />
+    <button class="btn btn-danger">Delete</button>
+</form>
+
+
 </body>
 </html>
