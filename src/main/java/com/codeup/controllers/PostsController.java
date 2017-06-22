@@ -1,5 +1,6 @@
 package com.codeup.controllers;
 
+import com.codeup.Repositories.PostsRepository;
 import com.codeup.models.Post;
 import com.codeup.svcs.PostSvc;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,11 @@ public class PostsController {
         this.postSvc = postSvc;
     }
 
+
+
     @GetMapping("/posts")
     public String viewAll(Model model) {
-        List<Post> posts = postSvc.findAll();
+        Iterable<Post> posts = postSvc.findAll();
         model.addAttribute("posts", posts);
         return "posts/index";
     }
@@ -51,4 +54,14 @@ public class PostsController {
         model.addAttribute("post", post);
         return "posts/create";
     }
+
+//Edit Functionality//
+
+    @GetMapping("/posts/{id}/edit")
+    public String showEditForm(@PathVariable long id, Model model) {
+        Post post = postSvc.findOne(id);
+        model.addAttribute("post",  post);
+        return "/posts/edit";
+    }
+
 }
