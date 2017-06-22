@@ -1,6 +1,6 @@
 package com.codeup.controllers;
 
-import com.codeup.Repositories.PostsRepository;
+
 import com.codeup.models.Post;
 import com.codeup.svcs.PostSvc;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+
 
 @Controller
 public class PostsController {
@@ -46,7 +46,7 @@ public class PostsController {
     @PostMapping("/posts/create")
     public String savePost(
             @RequestParam(name = "title") String title,
-            @RequestParam("body") String body,
+            @RequestParam(name = "body") String body,
             Model model
     ) {
         Post post = new Post(title, body);
@@ -62,6 +62,13 @@ public class PostsController {
         Post post = postSvc.findOne(id);
         model.addAttribute("post",  post);
         return "/posts/edit";
+    }
+
+    @PostMapping("/posts/{id}/edit")
+    public String updatePost(@ModelAttribute Post post){
+        postSvc.save(post);
+        return "redirect:/posts/" + post.getId();
+
     }
 
 }
