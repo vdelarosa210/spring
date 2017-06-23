@@ -23,9 +23,6 @@ public class Post {
     @OneToOne
     private User owner;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
 
     public Post (){
 
@@ -69,11 +66,5 @@ public class Post {
         this.owner = owner;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
+
 }

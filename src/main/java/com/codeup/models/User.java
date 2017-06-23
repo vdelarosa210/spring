@@ -14,18 +14,27 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
-    @Column()
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column()
+    @Column(nullable = false)
     private String password;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private List<Post> posts;
 
+    public User() {
+    }
+
+    public User(User user) {
+        id = user.id;
+        email = user.email;
+        username = user.username;
+        password = user.password;
+    }
 
     public long getId() {
         return id;
