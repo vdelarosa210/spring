@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
-
 @Controller
 public class PostsController {
 
@@ -19,7 +18,6 @@ public class PostsController {
     public PostsController(PostSvc postSvc) {
         this.postSvc = postSvc;
     }
-
 
 
     @GetMapping("/posts")
@@ -60,12 +58,12 @@ public class PostsController {
     @GetMapping("/posts/{id}/edit")
     public String showEditForm(@PathVariable long id, Model model) {
         Post post = postSvc.findOne(id);
-        model.addAttribute("post",  post);
+        model.addAttribute("post", post);
         return "/posts/edit";
     }
 
     @PostMapping("/posts/{id}/edit")
-    public String updatePost(@ModelAttribute Post post){
+    public String updatePost(@ModelAttribute Post post) {
         postSvc.save(post);
         return "redirect:/posts/" + post.getId();
 
@@ -74,7 +72,7 @@ public class PostsController {
     @PostMapping("/posts/delete")
     public String deletePost(@ModelAttribute Post post,
                              @RequestParam long id,
-                             Model model){
+                             Model model) {
 
         System.out.println(post.getId());
         postSvc.deletePost(id);
