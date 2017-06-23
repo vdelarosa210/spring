@@ -1,6 +1,7 @@
 package com.codeup.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by violet on 6/20/17.
@@ -22,17 +23,18 @@ public class Post {
     @OneToOne
     private User owner;
 
-    @ManyToOne
-    @JoinColumn (name = "post_id")
-    private Post post;
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//    private User user;
 
     public Post (){
 
     }
 
-    public Post(String title, String body) {
+    public Post(String title, String body, User owner) {
         this.title = title;
         this.body = body;
+        this.owner = owner;
     }
 
     public String getTitle() {
@@ -67,11 +69,11 @@ public class Post {
         this.owner = owner;
     }
 
-    public Post getPost() {
-        return post;
-    }
-
-    public void setPost(Post post) {
-        this.post = post;
-    }
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 }

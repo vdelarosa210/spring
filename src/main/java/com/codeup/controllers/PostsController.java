@@ -1,7 +1,9 @@
 package com.codeup.controllers;
 
 
+import com.codeup.Repositories.UsersRepository;
 import com.codeup.models.Post;
+import com.codeup.models.User;
 import com.codeup.svcs.PostSvc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,10 +15,13 @@ import org.springframework.web.bind.annotation.*;
 public class PostsController {
 
     private final PostSvc postSvc;
+    private final UsersRepository usersRepository;
+
 
     @Autowired
-    public PostsController(PostSvc postSvc) {
+    public PostsController(PostSvc postSvc, UsersRepository usersRepository) {
         this.postSvc = postSvc;
+        this.usersRepository = usersRepository;
     }
 
 
@@ -47,7 +52,8 @@ public class PostsController {
             @RequestParam(name = "body") String body,
             Model model
     ) {
-        Post post = new Post(title, body);
+        User user = usersRepository.findOne(1L); // hard-coded -> logged in user
+        Post post = new Post(title, body, user);
         postSvc.save(post);
         model.addAttribute("post", post);
         return "posts/create";

@@ -23,8 +23,9 @@ public class User {
     @Column()
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private List<Post> posts;
+
 
     public long getId() {
         return id;
