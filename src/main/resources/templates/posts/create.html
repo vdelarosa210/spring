@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-
-    <meta charset="UTF-8"/>
-    <title>Create a New Post</title>
-</head>
+<head th:include="fragments :: head('Create a new Ad')" />
 <body>
+<nav th:replace="fragments :: my-navbar"></nav>
 
-<form action="/posts/create" method="post" th:object="${post}">
+<form th:action="@{/posts/create}" th:method="post" th:object="${post}">
     <div class="form-group">
         <label for="title">Title</label>
         <input type="text" name="title" id="title" class="form-control" th:field="*{title}"/>
+        <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" />
+        <br/>
     </div>
     <div class="form-group">
         <label for="body">Description</label>
         <input type="text" name="body" id="body" class="form-control" th:field="*{body}"/>
+        <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}" />
+        <br />
     </div>
     <button class="btn btn-default">Save</button>
 </form>

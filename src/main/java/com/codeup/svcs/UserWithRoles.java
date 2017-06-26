@@ -1,4 +1,4 @@
-package com.codeup.Repositories;
+package com.codeup.svcs;
 
 
 import com.codeup.models.User;

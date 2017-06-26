@@ -1,9 +1,9 @@
-package com.codeup.svcs;
+package com.codeup.Repositories;
 
 import com.codeup.Repositories.RolesRepository;
-import com.codeup.Repositories.UserWithRoles;
 import com.codeup.Repositories.UsersRepository;
 import com.codeup.models.User;
+import com.codeup.svcs.UserWithRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

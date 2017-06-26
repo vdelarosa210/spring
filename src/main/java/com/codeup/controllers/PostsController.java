@@ -9,20 +9,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @Controller
 public class PostsController {
 
     private final PostSvc postSvc;
-    private final UsersRepository usersRepository;
+    private final UsersRepository usersDao;
 
 
     @Autowired
-    public PostsController(PostSvc postSvc, UsersRepository usersRepository) {
+    public PostsController(PostSvc postSvc, UsersRepository usersDao) {
         this.postSvc = postSvc;
-        this.usersRepository = usersRepository;
+        this.usersDao = usersDao;
     }
 
 
@@ -49,16 +52,22 @@ public class PostsController {
 
     @PostMapping("/posts/create")
     public String savePost(
-            @RequestParam(name = "title") String title,
-            @RequestParam(name = "body") String body,
+            @Valid Post post,
+            Errors validation,
             Model model
     ) {
+        if (validation.hasErrors()) {
+            model.addAttribute("errors", validation);
+            model.addAttribute("post", post);
+            return "posts/create";
+        }
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Post post = new Post(title, body, user);
+        post.setOwner(user);
         postSvc.save(post);
         model.addAttribute("post", post);
         return "posts/create";
     }
+
 
 //Edit Functionality//
 
@@ -80,8 +89,6 @@ public class PostsController {
     public String deletePost(@ModelAttribute Post post,
                              @RequestParam long id,
                              Model model) {
-
-        System.out.println(post.getId());
         postSvc.deletePost(id);
         model.addAttribute("message", "Your post was deleted correctly");
         return "redirect:/posts";

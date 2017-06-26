@@ -1,6 +1,9 @@
 package com.codeup.models;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -15,13 +18,19 @@ public class Post {
     private long id;
 
     @Column(nullable = false, length = 100)
+    @NotBlank(message = "Posts must have a title")
+    @Size(min = 3, message = "A title must be at least 3 characters.")
     private String title;
 
     @Column(nullable = false)
+    @NotBlank(message = "Posts must have a body")
     private String body;
 
     @OneToOne
     private User owner;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    private List<PostImage> images;
 
 
     public Post (){
@@ -67,4 +76,11 @@ public class Post {
     }
 
 
+    public List<PostImage> getImages() {
+        return images;
+    }
+
+    public void setImages(List<PostImage> images) {
+        this.images = images;
+    }
 }

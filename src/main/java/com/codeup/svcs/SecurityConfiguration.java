@@ -1,6 +1,6 @@
 package com.codeup.svcs;
 
-import com.codeup.Repositories.UserWithRoles;
+import com.codeup.Repositories.UserDetailsLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
