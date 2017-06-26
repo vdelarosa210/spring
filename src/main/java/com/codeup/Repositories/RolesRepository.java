@@ -1,5 +1,6 @@
 package com.codeup.Repositories;
 
+import com.codeup.models.UserRole;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
