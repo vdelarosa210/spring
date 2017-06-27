@@ -1,5 +1,6 @@
 package com.codeup.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -26,7 +27,8 @@ public class Post {
     @NotBlank(message = "Posts must have a body")
     private String body;
 
-    @OneToOne
+    @ManyToOne
+    @JsonManagedReference
     private User owner;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
