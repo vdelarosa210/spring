@@ -29,17 +29,19 @@ public class PostsController {
     public PostsController(PostSvc postSvc, UsersRepository usersDao) {
         this.postSvc = postSvc;
         this.usersDao = usersDao;
+
     }
 
     //=====add pageable=====//
     @Autowired
     private PostsRepository posts;
 
-    @GetMapping("/posts")
-    public String viewAll(Model model, @PageableDefault(value=10) Pageable pageable) {
+    @GetMapping("/posts/")
+    public String viewAll(Model model, @PageableDefault(value = 10) Pageable pageable) {
         model.addAttribute("page", posts.findAll(pageable));
         return "posts/index";
     }
+
     //=====pageable=====//
 
 // changed from method below to pageable //
@@ -49,6 +51,15 @@ public class PostsController {
 //        model.addAttribute("posts", posts);
 //        return "posts/index";
 //    }
+
+    @GetMapping("/posts.json")
+    public @ResponseBody
+    Iterable<Post> viewAllPosts() {
+        return postSvc.findAll();
+    }
+
+
+
 
     @GetMapping("/posts/{id}")
     public String viewIndividualPost(@PathVariable long id, Model model) {
