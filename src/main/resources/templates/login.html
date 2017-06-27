@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Log In</title>
-</head>
+<head th:replace="fragments :: head('hello world!')" />
+
 <body>
+<nav th:replace="fragments :: my-navbar" />
+
 <h1>Log In</h1>
 <div th:if="${param.error}">
     Invalid Username and Password.
@@ -20,6 +20,15 @@
     <input id="password" name="password" type="password"/>
     <input type="submit" value="Log In"/>
 </form>
+
+// create fragment for the following 2 //
+
+<script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"
+></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 </body>
 </html>

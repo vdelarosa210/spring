@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title></title>
-</head>
+<head th:replace="fragments :: head('hello world!')" />
+
 <body>
+<nav th:replace="fragments :: my-navbar" />
 <h1>Posts Index Page</h1>
 <h2>Listing of all the posts</h2>
 
