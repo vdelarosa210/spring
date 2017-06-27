@@ -58,7 +58,10 @@ public class PostsController {
         return postSvc.findAll();
     }
 
-
+    @GetMapping("/posts/ajax")
+    public String viewAllPostsUsingAnAjaxCall() {
+        return "posts/ajax";
+    }
 
 
     @GetMapping("/posts/{id}")
