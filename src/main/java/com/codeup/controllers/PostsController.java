@@ -1,11 +1,14 @@
 package com.codeup.controllers;
 
 
+import com.codeup.Repositories.PostsRepository;
 import com.codeup.Repositories.UsersRepository;
 import com.codeup.models.Post;
 import com.codeup.models.User;
 import com.codeup.svcs.PostSvc;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,13 +31,24 @@ public class PostsController {
         this.usersDao = usersDao;
     }
 
+    //=====add pageable=====//
+    @Autowired
+    private PostsRepository posts;
 
     @GetMapping("/posts")
-    public String viewAll(Model model) {
-        Iterable<Post> posts = postSvc.findAll();
-        model.addAttribute("posts", posts);
+    public String viewAll(Model model, @PageableDefault(value=10) Pageable pageable) {
+        model.addAttribute("page", posts.findAll(pageable));
         return "posts/index";
     }
+    //=====pageable=====//
+
+// changed from method below to pageable //
+//    @GetMapping("/posts")
+//    public String viewAll(Model model) {
+//        Iterable<Post> posts = postSvc.findAll();
+//        model.addAttribute("posts", posts);
+//        return "posts/index";
+//    }
 
     @GetMapping("/posts/{id}")
     public String viewIndividualPost(@PathVariable long id, Model model) {
