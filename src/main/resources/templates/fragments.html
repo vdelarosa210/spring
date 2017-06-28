@@ -2,10 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:fragment="head(title)">
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1"/>
     <title th:text="${title}">Bloggy blog blog</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
 </head>
 
 <!-- basic bootstrap navbar -->
@@ -13,7 +14,8 @@
     <div class="container-fluid">
 
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -60,24 +62,33 @@
         <label for="title">Title</label>
         <input id="title" class="form-control" th:field="*{title}"/>
         <div class="alert alert-warning alert-dismissible" role="alert" th:if="${#fields.hasErrors('title')}">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <span th:errors="*{title}" />
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <span th:errors="*{title}"/>
         </div>
     </div>
     <div class="form-group">
         <label for="description">Body</label>
         <input id="description" class="form-control" th:field="*{body}"/>
         <div class="alert alert-warning alert-dismissible" role="alert" th:if="${#fields.hasErrors('description')}">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <span th:errors="*{body}" />
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <span th:errors="*{body}"/>
         </div>
+    </div>
+    <div class="form-group">
+        <label for="file">Image</label>
+        <input type="file" class="form-control" name="file" id="file"/>
     </div>
     <button class="btn btn-default">Save</button>
 </form>
 
 <div th:fragment="scripts">
-    <script src="http://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="http://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
 </div>
 
 </html>

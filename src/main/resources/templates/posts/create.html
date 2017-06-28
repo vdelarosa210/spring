@@ -4,7 +4,7 @@
 <body>
 <nav th:replace="fragments :: my-navbar"></nav>
 
-<form th:action="@{/posts/create}" th:method="post" th:object="${post}">
+<form th:action="@{/posts/create}" th:method="post" th:object="${post}" enctype="multipart/form-data">
     <div class="form-group">
         <label for="title">Title</label>
         <input type="text" name="title" id="title" class="form-control" th:field="*{title}"/>

@@ -14,8 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
 
 
 @Controller
@@ -87,6 +91,7 @@ public class PostsController {
         if (validation.hasErrors()) {
             model.addAttribute("errors", validation);
             model.addAttribute("post", post);
+            @RequestParam(name = "file") MultipartFile uploadedFile,
             return "posts/create";
         }
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -111,6 +116,17 @@ public class PostsController {
         postSvc.save(post);
         return "redirect:/posts/" + post.getId();
 
+    }
+    String filename = uploadedFile.getOriginalFilename();
+    String filepath = Paths.get(uploadPath, filename).toString();
+    File destinationFile = new File(filepath);
+
+        try {
+        uploadedFile.transferTo(destinationFile);
+//            model.addAttribute("message", "File successfully uploaded!");
+    } catch (IOException e) {
+        e.printStackTrace();
+        model.addAttribute("message", "Oops! Something went wrong! " + e);
     }
 
     @PostMapping("/posts/delete")
