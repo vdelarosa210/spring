@@ -7,6 +7,7 @@ import com.codeup.models.Post;
 import com.codeup.models.User;
 import com.codeup.svcs.PostSvc;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +29,9 @@ public class PostsController {
     private final PostSvc postSvc;
     private final UsersRepository usersDao;
 
+    @Value("${file-upload-path}")
+    private String uploadPath;
+
 
     @Autowired
     public PostsController(PostSvc postSvc, UsersRepository usersDao) {
@@ -40,21 +44,13 @@ public class PostsController {
     @Autowired
     private PostsRepository posts;
 
-    @GetMapping("/posts/")
-    public String viewAll(Model model, @PageableDefault(value = 10) Pageable pageable) {
-        model.addAttribute("page", posts.findAll(pageable));
+// changed from method below to pageable //
+    @GetMapping("/posts")
+    public String viewAll(Model model) {
+        Iterable<Post> posts = postSvc.findAll();
+        model.addAttribute("posts", posts);
         return "posts/index";
     }
-
-    //=====pageable=====//
-
-// changed from method below to pageable //
-//    @GetMapping("/posts")
-//    public String viewAll(Model model) {
-//        Iterable<Post> posts = postSvc.findAll();
-//        model.addAttribute("posts", posts);
-//        return "posts/index";
-//    }
 
     @GetMapping("/posts.json")
     public @ResponseBody
@@ -86,19 +82,31 @@ public class PostsController {
     public String savePost(
             @Valid Post post,
             Errors validation,
+            @RequestParam(name = "file") MultipartFile uploadedFile,
             Model model
     ) {
         if (validation.hasErrors()) {
             model.addAttribute("errors", validation);
             model.addAttribute("post", post);
-            @RequestParam(name = "file") MultipartFile uploadedFile,
             return "posts/create";
+        }
+        String filename = uploadedFile.getOriginalFilename();
+        String filepath = Paths.get(uploadPath, filename).toString();
+        File destinationFile = new File(filepath);
+
+        try {
+            uploadedFile.transferTo(destinationFile);
+//            model.addAttribute("message", "File successfully uploaded!");
+        } catch (IOException e) {
+            e.printStackTrace();
+            model.addAttribute("message", "Oops! Something went wrong! " + e);
         }
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         post.setOwner(user);
+        post.setImageUrl(filename);
         postSvc.save(post);
         model.addAttribute("post", post);
-        return "posts/create";
+        return "redirect:/posts";
     }
 
 
@@ -117,17 +125,8 @@ public class PostsController {
         return "redirect:/posts/" + post.getId();
 
     }
-    String filename = uploadedFile.getOriginalFilename();
-    String filepath = Paths.get(uploadPath, filename).toString();
-    File destinationFile = new File(filepath);
 
-        try {
-        uploadedFile.transferTo(destinationFile);
-//            model.addAttribute("message", "File successfully uploaded!");
-    } catch (IOException e) {
-        e.printStackTrace();
-        model.addAttribute("message", "Oops! Something went wrong! " + e);
-    }
+
 
     @PostMapping("/posts/delete")
     public String deletePost(@ModelAttribute Post post,

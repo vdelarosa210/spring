@@ -9,5 +9,4 @@ import org.springframework.data.repository.CrudRepository;
  * Created by violet on 6/22/17.
  */
 public interface PostsRepository extends CrudRepository <Post, Long> {
-     Page<Post> findAll(Pageable pageable);
 }
