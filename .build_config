@@ -1,0 +1,3 @@
+
+ BUILD_COMMAND='./mvnw package'
+ WAR_FILE=target/spring-0.0.1-SNAPSHOT.war
