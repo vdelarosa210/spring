@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head th:fragment="head(title)">
     <meta charset="UTF-8"/>
@@ -31,10 +32,11 @@
                 </li>
                 <li><a href="/posts/create">Create post</a></li>
 
-                <li><a href="/register">Register</a></li>
-                <li><a href="/login">Login</a></li>
+                <li sec:authorize="isAnonymous()"><a href="/register">Register</a></li>
+                <li sec:authorize="isAnonymous()"><a href="/login">Login</a></li>
 
-                <li>
+
+                <li sec:authorize="isAuthenticated()">
                     <form th:action="@{/logout}" th:method="post">
                         <button class="btn-link btn" style="margin-top: 8px">Logout</button>
                     </form>
@@ -46,42 +48,28 @@
 </nav>
 
 <form th:fragment="form">
-    <div class="form-group">
-        <label for="title">Title</label>
-        <input id="title" type="text" th:field="*{title}"/>
-    </div>
-    <div class="form-group">
-        <label for="body">Body</label>
-        <input id="body" type="text" th:field="*{body}"/>
-    </div>
-    <button class="btn btn-default">Save</button>
+     <!--<form th:action="@{/posts/create}" th:method="post" th:object="${post}" enctype="multipart/form-data">-->
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title" class="form-control" th:field="*{title}"/>
+            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" />
+            <br/>
+        </div>
+        <div class="form-group">
+            <label for="body">Description</label>
+            <input type="text" name="body" id="body" class="form-control" th:field="*{body}"/>
+            <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}" />
+            <br />
+        </div>
+
+        <div class="form-group">
+            <label for="file">Picture</label>
+            <input type="file" name="file" id="file" class="form-control" />
+            <br />
+        </div>
+        <button class="btn btn-default">Save</button>
 </form>
 
-<form th:fragment="adForm">
-    <div class="form-group">
-        <label for="title">Title</label>
-        <input id="title" class="form-control" th:field="*{title}"/>
-        <div class="alert alert-warning alert-dismissible" role="alert" th:if="${#fields.hasErrors('title')}">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                    aria-hidden="true">&times;</span></button>
-            <span th:errors="*{title}"/>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="description">Body</label>
-        <input id="description" class="form-control" th:field="*{body}"/>
-        <div class="alert alert-warning alert-dismissible" role="alert" th:if="${#fields.hasErrors('description')}">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                    aria-hidden="true">&times;</span></button>
-            <span th:errors="*{body}"/>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="file">Image</label>
-        <input type="file" class="form-control" name="file" id="file"/>
-    </div>
-    <button class="btn btn-default">Save</button>
-</form>
 
 <div th:fragment="scripts">
     <script src="http://code.jquery.com/jquery-2.2.4.min.js"

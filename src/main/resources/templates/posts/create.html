@@ -1,32 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:include="fragments :: head('Create a new Ad')" />
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="fragments :: head('Create a new Ad')"/>
 <body>
 <nav th:replace="fragments :: my-navbar"></nav>
 
 <div class="container">
 
-<form th:action="@{/posts/create}" th:method="post" th:object="${post}" enctype="multipart/form-data">
-    <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" name="title" id="title" class="form-control" th:field="*{title}"/>
-        <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" />
-        <br/>
-    </div>
-    <div class="form-group">
-        <label for="body">Description</label>
-        <input type="text" name="body" id="body" class="form-control" th:field="*{body}"/>
-        <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}" />
-        <br />
-    </div>
-
-    <div class="form-group">
-        <label for="file">Picture</label>
-        <input type="file" name="file" id="file" class="form-control" />
-        <br />
-    </div>
-    <button class="btn btn-default">Save</button>
-</form>
+    <form th:include="fragments :: form"
+          th:action="@{/posts/create}"
+          th:method="post"
+          th:object="${post}"
+          enctype="multipart/form-data"></form>
 </div>
 </body>
 </html>

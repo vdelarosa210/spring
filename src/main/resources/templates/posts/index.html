@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:replace="fragments :: head('hello world!')" />
 
 <body>
@@ -15,7 +16,7 @@
     <div th:if="${post.imageUrl}">
         <img th:src="${'/uploads/' + post.imageUrl}" alt="" width="200" height="200" />
     </div>
-    <h2>Title: <span th:text="${post.title}"></span></h2>
+    <a th:href="@{'/posts/' + ${post.id}}"><h2>Title: <span th:text="${post.title}"></span></h2></a>
     <h2>Body: <span th:text="${post.body}"></span></h2>
     <h5>User: <span th:text="${post.owner.username}"></span></h5>
     <h5>user's email<span th:text="${post.owner.email}"></span> </h5>

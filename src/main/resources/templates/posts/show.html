@@ -1,15 +1,19 @@
 <!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title></title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="fragments :: head('View Individual Post')"/>
+
 <body>
 <h1>Posts Show Page</h1>
-<h2>This is the view for an individual post.</h2>
 <h2>Title: <span th:text="${post.title}"></span></h2>
 <h2>Body: <span th:text="${post.body}"></span></h2>
-<h2>Email: <span th:text="${post.owner.email}"</h2>
+<h2>Email: <span th:text="${post.owner.email}"/></h2>
+<h5>User: <span th:text="${post.owner.username}"></span></h5>
+<div th:if="${post.imageUrl}">
+    <img th:src="${'/uploads/' + post.imageUrl}" alt="" width="200" height="200" />
+</div>
+<a th:if="${post.owner.id == user.id}" th:href="@{'/posts/' + ${post.id} + '/edit'}">Edit</a>
+
+
 </body>
 </html>
